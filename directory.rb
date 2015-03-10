@@ -2,15 +2,15 @@
 
 #put all students into an array
 students = [
-  ["Arin Hanson", :february],
-  ["Stan Smith", :february],
-  ["Dan Evidan", :february],
-  ["Rick Grimes", :march],
-  ["Clint Eastwood", :march],
-  ["Charlie Sheen", :march],
-    ["Gavin Free", :december],
-    ["Michael Jones", :december],
-    ["Ed O'Brien", :december]
+  {:name => "Arin Hanson", :cohort => :february},
+  {:name => "Stan Smith", :cohort => :february},
+  {:name => "Dan Evidan", :cohort => :february},
+  {:name => "Rick Grimes", :cohort => :march},
+  {:name => "Clint Eastwood", :cohort => :march},
+  {:name => "Charlie Sheen", :cohort => :march},
+  {:name => "Gavin Free", :cohort => :december},
+  {:name => "Michael Jones", :cohort => :december},
+  {:name => "Ed O'Brien", :cohort => :december}
   ]
 
 
@@ -22,8 +22,8 @@ def print_header
 end
 
   def print(students)
-    students.each do |name|
-      puts "#{name[0]} (#{name[1]} cohort)"
+    students.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
