@@ -28,4 +28,4 @@ puts students[8]
 
 #error can occur here if use "" and '', causing miscommunication to ruby
 
-puts "Overall, we have #{student_count} great students"
+puts "Overall, we have #{students.length} great students"
