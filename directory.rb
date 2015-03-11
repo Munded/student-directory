@@ -43,6 +43,7 @@ def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
     puts "3. Save the list to students.csv"
+    puts "4. Load the list from students.csv"
     puts "9. Exit"
 end
 
@@ -60,8 +61,10 @@ case selection
         input_students
       when "2"
         show_students  
-       when "3"
+      when "3"
         save_students
+      when "4"
+        load_students
       when "9" 
         exit 
     else 
@@ -80,7 +83,7 @@ end
 
 #save inputted students into directory
 def save_students
-  #open file for writing
+  #open file for writing, second arguement is file access mode
   file = File.open("students.csv", "w")
   #iterate over the array of students
   @students.each do |student|
@@ -93,5 +96,20 @@ def save_students
   puts ""
 end
 
+
+#Load previously written directory in read-only, so noone would read
+def load_students
+  #open students.csv in read only
+  file = File.open("students.csv", "r")
+  #iterate and read through each line
+  file.readlines.each do |line|
+    #for each line, split split into name and cohort, parallel assignment
+    name, cohort = line.chomp.split(',')
+    #Add name and cohort to students
+    @students << {:name => name, :cohort => cohort.to_sym}
+  end
+  #always close file when opening
+  file.close
+end
 
 interactive_menu
