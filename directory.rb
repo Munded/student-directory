@@ -24,16 +24,15 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   
-  name = gets.chomp
+  name = STDIN.gets.chomp
   
   while !name.empty? do
     
-    @students << {:name => name, :cohort => :november}
+    add_student(name, :november)
      puts "Now we have #{@students.length} students"
     
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
-  @students
 end
 
 
@@ -77,7 +76,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
 end
 end
 
@@ -96,20 +95,36 @@ def save_students
   puts ""
 end
 
+def add_student(name, cohort)
+  @students << {:name => name, :cohort => cohort.to_sym}
+end
 
 #Load previously written directory in read-only, so noone would read
-def load_students
+def load_students(filename = "students.csv")
   #open students.csv in read only
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   #iterate and read through each line
   file.readlines.each do |line|
     #for each line, split split into name and cohort, parallel assignment
     name, cohort = line.chomp.split(',')
     #Add name and cohort to students
-    @students << {:name => name, :cohort => cohort.to_sym}
+    add_student(name, cohort)
   end
   #always close file when opening
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.length} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
