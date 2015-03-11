@@ -16,7 +16,11 @@ end
 
 # print footer with added count of items in the student array
 def print_footer
-  puts "Overall, we have #{@students.length} great students"
+  if @students.length == 1
+  puts "Overall, we have #{@students.length} great student"
+  else 
+    puts "Overall, we have #{@students.length} great students"
+  end
   puts " "
 end
 
@@ -30,7 +34,11 @@ def input_students
   while !name.empty? do
     
     add_student(name, yob, hobby, :november)
+    if @students.length ==1
+      puts "Now we have #{@students.length} student"
+    else
      puts "Now we have #{@students.length} students"
+    end
     puts " "
     name, yob, hobby = STDIN.gets.chomp
   end
