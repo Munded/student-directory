@@ -10,28 +10,29 @@ end
 #iterate through student array, print the student's name and cohort, and print count
 def print_student_list
     @students.each_with_index do |student, i|
-      puts "#{i + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{i + 1}. #{student[:name]}, year of birth is#{student[:birthyear]}, hobbies include#{student[:hobby]} (#{student[:cohort]} cohort)"
   end
 end
 
 # print footer with added count of items in the student array
 def print_footer
   puts "Overall, we have #{@students.length} great students"
+  puts " "
 end
 
 #input student interface, asks for user input, the loops whilst input is not empty, and adds info to student array
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the names, year of birth and hobbies of the students"
   puts "To finish, just hit return twice"
   
-  name = STDIN.gets.chomp
+  name, yob, hobby = STDIN.gets.chomp.split(',')
   
   while !name.empty? do
     
-    add_student(name, :november)
+    add_student(name, yob, hobby, :november)
      puts "Now we have #{@students.length} students"
-    
-    name = STDIN.gets.chomp
+    puts " "
+    name, yob, hobby = STDIN.gets.chomp
   end
 end
 
@@ -86,7 +87,7 @@ def save_students
   file = File.open("students.csv", "w")
   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
+    student_data = [student[:name], student[:birthyear], student[:hobby], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
@@ -95,8 +96,8 @@ def save_students
   puts ""
 end
 
-def add_student(name, cohort)
-  @students << {:name => name, :cohort => cohort.to_sym}
+def add_student(name, yob, hobby, cohort)
+  @students << {:name => name, :birthyear => yob, :hobby => hobby, :cohort => cohort.to_sym}
 end
 
 #Load previously written directory in read-only, so noone would read
@@ -106,9 +107,9 @@ def load_students(filename = "students.csv")
   #iterate and read through each line
   file.readlines.each do |line|
     #for each line, split split into name and cohort, parallel assignment
-    name, cohort = line.chomp.split(',')
+    name, yob, hobby, cohort = line.chomp.split(',')
     #Add name and cohort to students
-    add_student(name, cohort)
+    add_student(name, yob, hobby, cohort)
   end
   #always close file when opening
   file.close
