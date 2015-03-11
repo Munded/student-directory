@@ -3,7 +3,7 @@
 
 #print header
 def print_header
-  puts "The student of my cohort at Makers Academy"
+  puts "The students of my cohort at Makers Academy"
   puts "---------------------------------"
 end
 
@@ -57,9 +57,13 @@ end
 
 #show_students display, calls the header, student list and footer functions
 def show_students
+  if @students.length == 0
+    puts "There are no students in directory"
+  else
   print_header
   print_student_list
   print_footer
+  end
 end
 
 #process that responds to user input in the interactive menu
@@ -89,10 +93,13 @@ def interactive_menu
 end
 end
 
+
 #save inputted students into directory
 def save_students
+  puts "Name of save file?"
+  new_file = gets.chomp
   #open file for writing, second arguement is file access mode
-  file = File.open("students.csv", "w")
+  file = File.open(new_file, "w")
   #iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:birthyear], student[:hobby], student[:cohort]]
@@ -109,7 +116,14 @@ def add_student(name, yob, hobby, cohort)
 end
 
 #Load previously written directory in read-only, so noone would read
-def load_students(filename = "students.csv")
+def load_students
+  puts "What file would you like to load directory from?"
+  filename = gets.chomp
+  if !File.exist?(filename)
+    puts "File does not exist"
+    puts ""
+    interactive_menu
+  else
   #open students.csv in read only
   file = File.open(filename, "r")
   #iterate and read through each line
@@ -121,6 +135,8 @@ def load_students(filename = "students.csv")
   end
   #always close file when opening
   file.close
+  puts "Student Directory Loaded"
+end
 end
 
 def try_load_students
