@@ -8,10 +8,14 @@ def print_header
 end
 
 #iterate through student array, print the student's name and cohort, and print count
+
+
 def print_student_list
-    @students.each_with_index do |student, i|
-      puts "#{i + 1}. #{student[:name]}, year of birth is#{student[:birthyear]}, hobbies include#{student[:hobby]} (#{student[:cohort]} cohort)"
-  end
+    i = 0
+while i < @students.length do
+  puts "#{i + 1}. #{@students[i][:name]}, year of birth is#{@students[i][:birthyear]}, hobbies include#{@students[i][:hobby]} (#{@students[i][:cohort]} cohort)"
+    i += 1
+end
 end
 
 # print footer with added count of items in the student array
